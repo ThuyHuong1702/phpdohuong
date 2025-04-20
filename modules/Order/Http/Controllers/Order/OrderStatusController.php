@@ -10,8 +10,17 @@ use Modules\Order\Entities\Order;
 
 class OrderStatusController extends Controller
 {
-    public function show()
+    public function update(Request $request, $id)
     {
-        return view("{$this->viewPath}.show");
+        $request->validate([
+            'status' => 'required|string|in:' . implode(',', array_keys(trans('order::statuses'))),
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return response()->json(['message' => 'Cập nhật trạng thái thành công']);
     }
+
 }

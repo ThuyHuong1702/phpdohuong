@@ -16,9 +16,36 @@
     </div>
 @endsection
 
+
 @push('globals')
     @vite([
         'modules/Order/Resources/assets/admin/sass/main.scss',
         'modules/Order/Resources/assets/admin/js/main.js',
     ])
+@endpush
+@push('scripts')
+<script>
+    document.getElementById('order-status').addEventListener('change', function () {
+        const orderId = this.dataset.id;
+        const newStatus = this.value;
+
+        fetch(`/admin/orders/${orderId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            window.location.href = "{{ route('admin.orders.index') }}";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã có lỗi xảy ra khi cập nhật trạng thái.');
+        });
+    });
+</script>
 @endpush

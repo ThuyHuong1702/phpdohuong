@@ -57,17 +57,17 @@ class OrderController extends Controller
     }
 
     public function show($id)
-{
-    // Eager load order products and variations
-    $order = Order::with([
-        'orderProducts.product',
-        'orderProducts.variations',
-        'customer',
-    ])
-    ->findOrFail($id);
+    {
+        //Eager load order products and variations
+        $order = Order::with([
+            'orderProducts.product',
+            'orderProducts.variations',
+            'customer',
+        ])
+        ->findOrFail($id);
 
-    return view("{$this->viewPath}.show", compact('order'));
-}
+        return view("{$this->viewPath}.show", compact('order'));
+    }
 
 
 }

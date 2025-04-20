@@ -23,12 +23,11 @@
                                             {{ $orderProduct->product->name }}
                                         </a>
                                         <br>
-                                        @if (!empty($orderProduct->variation))
-                                        @foreach ($order->orderProducts as $orderProduct)
+
+                                        @if ($orderProduct->variations && $orderProduct->variations->isNotEmpty())
                                             @foreach ($orderProduct->variations as $variation)
                                                 <span>{{ ucfirst($variation->type) }}: <span>{{ $variation->value }}</span></span><br>
                                             @endforeach
-                                        @endforeach
                                         @endif
                                     </td>
                                     <td>{{ number_format($orderProduct->unit_price, 0, ',', '.') }}đ</td>
