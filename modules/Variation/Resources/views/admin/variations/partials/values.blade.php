@@ -49,7 +49,7 @@
                                     @keyup.enter="addRowOnPressEnter($event, index)"
                                     v-model="value.label"
                                 >
-                                
+
                                 <span class="help-block text-red">
                                 </span>
                             </td>

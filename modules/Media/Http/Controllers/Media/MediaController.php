@@ -16,4 +16,19 @@ class MediaController extends Controller
     {
         return view('media::index');
     }
+
+    public function store(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('uploads', 'public');
+
+            return response()->json([
+                'path' => asset('storage/' . $path)  // Ensure the path is correct
+            ]);
+        }
+
+        return response()->json(['message' => 'No file uploaded'], 400);
+    }
+
+
 }

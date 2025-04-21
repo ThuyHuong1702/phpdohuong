@@ -19,7 +19,7 @@ export default function (options = {}) {
         cache_suffix: `?v=${Ecommerce.version}`,
         content_style: "body { color: #333333; }",
         plugins:
-            "lists, link, table, image, media, paste, autosave, autolink,quickbars, wordcount, code, fullscreen",
+        "lists, link, table, image, media, paste, paste_data_images, autosave, autolink, quickbars, wordcount, code, fullscreen",
         toolbar:
             "styleselect | bold italic underline strikethrough blockquote | bullist numlist | alignleft aligncenter alignright alignjustify | outdent indent | forecolor removeformat | table | image media link | code fullscreen",
         quickbars_selection_toolbar:

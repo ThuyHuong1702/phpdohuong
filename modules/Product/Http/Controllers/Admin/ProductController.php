@@ -216,9 +216,10 @@ class ProductController
      */
     public function update(Request $request, $id)
     {
+        //dd($request->all());
         //$validatedData = $request->validated();
         $structuredData = ProductService::formatProductVariants($request->all());
-
+        //dd($structuredData);
         $product = Product::findOrFail($id);
 
         if (!empty($structuredData['variants'])) {
@@ -255,7 +256,7 @@ class ProductController
                     'special_price_type' => $variant['special_price_type'],
                     'special_price_start' => $variant['special_price_start'],
                     'special_price_end' => $variant['special_price_end'],
-                    'manage_stock' => $variant['manage_stock'],
+                    'in_stock' => isset($variant['in_stock']) ? intval($variant['in_stock']) : 1,
                     'qty' => $variant['qty'],
                     'in_stock' => $variant['in_stock'],
                     'is_active' => $variant['is_active'] ?? 1,
@@ -281,9 +282,8 @@ class ProductController
                 'short_description' => $structuredData['short_description'] ?? null,
                 'new_from' => $structuredData['new_from'] ?? null,
                 'new_to' => $structuredData['new_to'] ?? null,
-                'manage_stock' => $structuredData['manage_stock'] ?? 0,
+                'in_stock' => isset($structuredData['in_stock']) ? intval($structuredData['in_stock']) : 1,
                 'qty' => $structuredData['qty'] ?? null,
-                'in_stock' => $data['in_stock'] ?? 1,
             ]);
 
         }

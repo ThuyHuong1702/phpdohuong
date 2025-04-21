@@ -52,7 +52,7 @@
                         </span>
                     </td>
                     <td>
-                        <span class="badge {{ $product->in_stock ? 'badge-success' : 'badge-danger' }}">
+                        <span class="badge {{ $product->is_active ? 'badge-success' : 'badge-danger' }}">
                             {{ $product->is_active ? 'Active' : 'UnActive' }}
                         </span>
                     </td>

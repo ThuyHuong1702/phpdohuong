@@ -27,11 +27,12 @@ class Variation extends Model
 
     public function values(): HasMany
     {
-        return $this->hasMany(VariationValue::class);
+        return $this->hasMany(VariationValue::class, 'variation_id', 'id');
     }
 
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_variations', 'variation_id', 'product_id');
     }
+
 }

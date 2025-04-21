@@ -315,7 +315,7 @@ export default {
 
             $.ajax({
                 type: "GET",
-                url: route("admin.variations.show", { id: this.globalVariationId }),
+                url: route("admin.variations.showVariants", { id: this.globalVariationId }),
                 dataType: "json",
                 success: (variation) => {
                     variation.uid = this.uid();

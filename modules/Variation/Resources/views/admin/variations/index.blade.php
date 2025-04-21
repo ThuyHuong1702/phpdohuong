@@ -1,21 +1,21 @@
 @extends('admin::layout')
- 
+
 @component('admin::components.page.header')
     @slot('title', trans('variation::variations.variations'))
- 
+
     <li class="active">{{ trans('variation::variations.variations') }}</li>
 @endcomponent
 
-@component('admin::components.page.index_table')
+@component('admin::components.page.index_table', ['showDelete' => $showDelete])
     @slot('buttons', ['create'])
     @slot('resource', 'variations')
     @slot('name', trans('variation::variations.variation'))
- 
+
     @slot('thead')
         @include('variation::admin.variations.partials.thead', ['name' => 'variations-index'])
-        
+
     @endslot
- 
+
     @slot('tbody')
     @if (!empty($variations))
         @foreach ($variations as $variation)
@@ -53,7 +53,7 @@
     @slot('tPagination')
         {!! $variations->appends(request()->input())->links('admin::pagination.simple') !!}
     @endslot
- 
+
     @slot('ttotal')
         <div>
             <label class="dt-info" aria-live="polite" id="DataTables_Table_0_info" role="status">
@@ -61,7 +61,7 @@
             </label>
         </div>
     @endslot
- 
+
     @slot('tchange')
         <div class="row dt-layout-row">
             <div class="dt-paging">
@@ -76,7 +76,7 @@
         </div>
     @endslot
 @endcomponent
- 
+
 @push('scripts')
     <script type="module">
    $(document).ready(function() {

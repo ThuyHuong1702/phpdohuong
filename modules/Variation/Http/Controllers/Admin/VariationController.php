@@ -31,19 +31,19 @@ class VariationController extends Controller
       }
 
       // Lấy thứ tự sắp xếp, mặc định là 'asc'
-      $sortOrder = $request->get('sort', 'desc'); 
+      $sortOrder = $request->get('sort', 'desc');
       if (!in_array(strtolower($sortOrder), ['asc', 'desc'])) {
           $sortOrder = 'desc';
       }
-      
-    
+
+
         $perPage = $request->input('per_page', 20);
         $totalProducts = Variation::count();
         $variations = Variation::orderBy($sortBy, $sortOrder)->paginate($perPage);
-    
-        return view('variation::admin.variations.index', compact('variations', 'sortBy', 'sortOrder','perPage', 'totalProducts'));
+        $showDelete = true;
+        return view('variation::admin.variations.index', compact('variations', 'sortBy', 'sortOrder','perPage', 'totalProducts', 'showDelete'));
     }
-    
+
 
     /**
      * Hiển thị form thêm dữ liệu mới.
@@ -138,6 +138,24 @@ class VariationController extends Controller
 
         return view('variation::admin.variations.show', compact('variation', 'values'));
     }
+
+    public function showVariants($id)
+    {
+        // Truy vấn biến thể theo ID, lấy kèm danh sách các giá trị từ bảng variation_values
+        $variation = Variation::with(['values' => function ($query) {
+            $query->selectRaw('*') // Chọn tất cả các cột
+                  ->addSelect(['value as color']); // Ánh xạ cột 'value' thành 'color'
+        }])->findOrFail($id);
+
+        // Nếu không tìm thấy, trả về lỗi 404
+        if (!$variation) {
+            return response()->json(['message' => 'Không tìm thấy biến thể'], 404);
+        }
+
+        // Trả về dữ liệu biến thể dưới dạng JSON
+        return response()->json($variation);
+    }
+
 
     /**
      * Hiển thị form sửa dữ liệu.

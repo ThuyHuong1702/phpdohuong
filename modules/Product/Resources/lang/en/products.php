@@ -91,8 +91,8 @@ return [
             '1' => 'Track Inventory',
         ],
         'stock_availability_states' => [
-            '1' => 'In Stock',
             '0' => 'Out of Stock',
+            '1' => 'In Stock',
         ],
 
         'variations' => [
