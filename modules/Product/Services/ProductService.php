@@ -92,7 +92,7 @@ class ProductService
                 'sku' => $data["variants_{$variantId}_sku"] ?? null,
                 'price' => $data["variants_{$variantId}_price"] ?? null,
                 'special_price' => $data["variants_{$variantId}_special_price"] ?? null,
-                'special_price_type' => isset($data["special_{$variantId}_type"]) && $data["special_{$variantId}_type"] == 2 ? 2 : 1,
+                'special_price_type' => isset($data["variants_{$variantId}_special_price_type"]) && $data["variants_{$variantId}_special_price_type"] == '2' ? 2 : 1,
                 'special_price_start' => $data["variants_{$variantId}_special_price_start"] ?? null,
                 'special_price_end' => $data["variants_{$variantId}_special_price_end"] ?? null,
                 'manage_stock' => isset($data["variants_{$variantId}_manage_stock"]) ? intval($data["variants_{$variantId}_manage_stock"]) : 0,
@@ -101,6 +101,7 @@ class ProductService
                 'is_active' => isset($data["variants_{$variantId}_is_active"]) ? ($data["variants_{$variantId}_is_active"] === 'on' ? 1 : 0) : 0,
                 'is_default' => isset($data["default_variant"]) && $data["default_variant"] === $variantId ? 1 : 0,
             ];
+
             // Nếu biến thể là mặc định, đảm bảo nó cũng phải là active
             if ($product['variants'][$variantId]['is_default'] == 1) {
                 $product['variants'][$variantId]['is_active'] = 1;

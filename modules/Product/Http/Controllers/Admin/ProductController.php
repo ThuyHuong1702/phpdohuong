@@ -112,8 +112,8 @@ class ProductController
      */
     public function store(ProductRequest $request)
     {
+       //dd($request->all());
         $request->validated();
-        //dd($request->all());
         // Xác thực dữ liệu đầu vào
 
         // Gọi ProductService để format dữ liệu
