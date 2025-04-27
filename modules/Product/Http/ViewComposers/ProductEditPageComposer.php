@@ -20,8 +20,9 @@ class ProductEditPageComposer
     {
         $brands = Brand::all();
         $categories = Category::all();
-        $variations = Variation::with('values')->get();
-
+        $variations = Variation::with('values')
+        ->whereNull('deleted_at')
+        ->get();
         $view->with(compact('brands', 'categories', 'variations'));
     }
 }

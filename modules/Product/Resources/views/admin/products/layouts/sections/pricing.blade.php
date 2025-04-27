@@ -29,15 +29,14 @@
                         <span class="input-group-addon">
                             VNĐ
                         </span>
+                        <input type="number" name="price" id="price" step="any" class="form-control"
+                        value="{{ old('price', $product->price ?? '') !== '' ? format_price(old('price', $product->price ?? '')) : '' }}">
 
-                        <input type="number" name="price" step="0.1" id="price"
-                            class="form-control" value="{{ old('name', $product->price ?? '') }}" >
                     </div>
                     @error('price')
-                        <span class="help-block text-red">{{ $message }}</span>
+                    <span class="help-block text-red">{{ $message }}</span>
                     @enderror
                 </div>
-
             </div>
 
             <div class="form-group row">
@@ -139,6 +138,9 @@
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </span>
                     </div>
+
+                    <span class="help-block text-red" v-if="errors.has('special_price_end')"
+                        v-text="errors.get('special_price_end')"></span>
 
                     @error('special_price_end')
                         <span class="help-block text-red">{{ $message }}</span>

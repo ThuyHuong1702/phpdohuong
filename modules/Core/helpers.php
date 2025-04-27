@@ -157,3 +157,24 @@ if (!function_exists('activeMenu')) {
         return $class;
     }
 }
+
+if (! function_exists('format_price')) {
+    /**
+     * Format price to remove unnecessary zeros after decimal point.
+     *
+     * @param  float|string $price
+     * @return string
+     */
+    function format_price($price)
+    {
+        // Convert price to float to handle decimal points correctly
+        $price = (float)$price;
+
+        // Remove trailing zeros after decimal point
+        if (strpos($price, '.') !== false) {
+            $price = rtrim(rtrim(number_format($price, 8, '.', ''), '0'), '.');
+        }
+
+        return $price;
+    }
+}

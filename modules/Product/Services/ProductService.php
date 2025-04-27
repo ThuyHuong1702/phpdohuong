@@ -18,6 +18,15 @@ class ProductService
         return $result;
     }
 
+    private static function mapSpecialPriceType($value)
+    {
+        if ($value === 'fixed' || $value === '1') {
+            return 1;
+        } elseif ($value === 'percent' || $value === '2') {
+            return 2;
+        }
+        return null;
+    }
 
     public static function formatProductVariants(array $data)
     {
@@ -70,6 +79,11 @@ class ProductService
             }
         }
 
+        // Lọc bỏ variations không hợp lệ (không name hoặc không values)
+        $orderedVariations = array_filter($orderedVariations, function ($variation) {
+            return !empty($variation['name']) && !empty($variation['values']);
+        });
+
         $product['variations'] = $orderedVariations;
 
         // Tạo tổ hợp biến thể
@@ -92,7 +106,7 @@ class ProductService
                 'sku' => $data["variants_{$variantId}_sku"] ?? null,
                 'price' => $data["variants_{$variantId}_price"] ?? null,
                 'special_price' => $data["variants_{$variantId}_special_price"] ?? null,
-                'special_price_type' => isset($data["variants_{$variantId}_special_price_type"]) && $data["variants_{$variantId}_special_price_type"] == '2' ? 2 : 1,
+                'special_price_type' => self::mapSpecialPriceType($data["variants_{$variantId}_special_price_type"] ?? null),
                 'special_price_start' => $data["variants_{$variantId}_special_price_start"] ?? null,
                 'special_price_end' => $data["variants_{$variantId}_special_price_end"] ?? null,
                 'manage_stock' => isset($data["variants_{$variantId}_manage_stock"]) ? intval($data["variants_{$variantId}_manage_stock"]) : 0,
